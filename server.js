@@ -1,14 +1,13 @@
-const fs = require("fs");
-const http = require("http");
+const path = require("path");
+const express = require("express");
+const app = express();
 
-const file = fs.readFileSync("./index.html", "utf8");
 const PORT = process.env.PORT || 7000;
 
-const server = http.createServer((request, response) => {
-  response.writeHead(200, { "Content-Type": "text/html" });
-  response.write(file);
-  response.end();
+app.get("/", (request, response) => {
+  response.sendFile(path.join(__dirname, "index.html"));
 });
 
-server.listen(7000);
-console.log(`Server is running on port ${PORT}`);
+app.listen(PORT, () => {
+  console.log(`Express app is running on port ${PORT}`);
+});
